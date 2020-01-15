@@ -1,0 +1,27 @@
+﻿@page "/pinger"
+
+
+    <div class="jumbotron vertical-center">
+        <div class="container">
+            <h3>@hostTitle <span class="badge badge-secondary">Host Reachable</span></h3>
+            <div class="input-group mb-3">
+                <input type="text" @bind(host.Hostname) class="form-control" placeholder="Hostname">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Ping</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+@code {
+    string hostTitle = "Pinger";
+
+    public class Host
+    {
+        public string Hostname { get; set; }
+    }
+
+    Host host = new Host();
+}
