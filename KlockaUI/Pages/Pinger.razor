@@ -1,27 +1,59 @@
 ﻿@page "/pinger"
+@using KlockaLib
+@using KlockaLib.Models
 
-
-    <div class="jumbotron vertical-center">
-        <div class="container">
-            <h3>@hostTitle <span class="badge badge-secondary">Host Reachable</span></h3>
-            <div class="input-group mb-3">
-                <input type="text" @bind(host.Hostname) class="form-control" placeholder="Hostname">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Ping</button>
-                </div>
+<div class="jumbotron vertical-center">
+    <div class="container">
+        <h3>@hostTitle</h3>
+        <div class="input-group mb-3">
+            <input type="text" placeholder="Hostname" @bind-value="hostname" @bind-value:event="oninput" class="form-control" />
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" @onclick="TestConnection" type="button">Ping</button>
             </div>
-            
         </div>
+        @if (showResult)
+        {
+            <ul class="list-group-flush">
+                <li class="list-group-item">@connectionResult
+                    <button type="button" class="close" aria-label="Close" @onclick="HideResult">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </li>
+            </ul>
+        }
     </div>
+</div>
 
 
-@code {
+@code 
+{
     string hostTitle = "Pinger";
+    private string connectionResult;
+    private string hostname;
+    private bool showResult = false;
 
-    public class Host
+    private void TestConnection()
     {
-        public string Hostname { get; set; }
-    }
+        if (!string.IsNullOrWhiteSpace(hostname))
+        {
+            using(var connectionTester = new ConnectionValidator())
+            {
+                var result = connectionTester.Validate(hostname);
+                if (result.Success)
+                {
+                    connectionResult = $"{hostname} is reachable";
+                }
+                else
+                {
+                    connectionResult = $"{hostname} is not reachable - {result.ErrorMessage}";
+                }
+            }
+            showResult = true;
+        }
 
-    Host host = new Host();
+    }
+    private void HideResult()
+    {
+        showResult = false;
+    }
 }
