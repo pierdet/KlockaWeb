@@ -1,6 +1,7 @@
 ﻿@page "/pinger"
 @using KlockaLib
 @using KlockaLib.Models
+@inject ConnectionValidator ConnectionValidator
 
 <div class="jumbotron vertical-center">
     <div class="container">
@@ -36,17 +37,14 @@
     {
         if (!string.IsNullOrWhiteSpace(hostname))
         {
-            using(var connectionTester = new ConnectionValidator())
+            var result = ConnectionValidator.Validate(hostname);
+            if (result.Success)
             {
-                var result = connectionTester.Validate(hostname);
-                if (result.Success)
-                {
-                    connectionResult = $"{hostname} is reachable";
-                }
-                else
-                {
-                    connectionResult = $"{hostname} is not reachable - {result.ErrorMessage}";
-                }
+                connectionResult = $"{hostname} is reachable";
+            }
+            else
+            {
+                connectionResult = $"{hostname} is not reachable - {result.ErrorMessage}";
             }
             showResult = true;
         }
