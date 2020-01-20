@@ -1,0 +1,16 @@
+﻿<h3>Inventories</h3>
+@page "/inventories"
+@inject KlockaLib.Repositories.IInventoryRepository InventoryRepository
+
+<ul>
+    @foreach (var inventory in InventoryRepository.GetAll())
+    {
+        <li>@inventory.Name
+            <a href="/inventory/@inventory.Id">Details</a>
+        </li>
+        
+    }
+</ul>
+@code {
+
+}

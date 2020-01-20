@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Compile Remove="Migrations\20200120205427_Data annotations.cs" />
+    <Compile Remove="Migrations\20200120205427_Data annotations.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

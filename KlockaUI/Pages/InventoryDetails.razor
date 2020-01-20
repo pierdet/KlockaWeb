@@ -1,0 +1,18 @@
+﻿@page "/inventory/{Id:int}"
+@inject KlockaLib.Repositories.IInventoryRepository InventoryRepository
+@using KlockaLib.Data.Entities
+
+<h3>InventoryDetails</h3>
+
+<h4>@inv.Name</h4>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Inventory inv;
+    protected override void OnInitialized()
+    {
+        inv = InventoryRepository.GetById(Id);
+    }
+}
