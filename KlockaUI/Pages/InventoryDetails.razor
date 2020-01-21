@@ -1,10 +1,14 @@
 ﻿@page "/inventory/{Id:int}"
 @inject KlockaLib.Repositories.IInventoryRepository InventoryRepository
+@inject NavigationManager NavigationManager
 @using KlockaLib.Data.Entities
 
-<h3>InventoryDetails</h3>
+    <h3>
+        @inv.Name
+        <span class="btn btn-primary" @onclick="BackToInventories">&#x25c0;</span>
+    </h3>
 
-<h4>@inv.Name</h4>
+
 
 @code {
     [Parameter]
@@ -14,5 +18,10 @@
     protected override void OnInitialized()
     {
         inv = InventoryRepository.GetById(Id);
+    }
+
+    void BackToInventories()
+    {
+        NavigationManager.NavigateTo("/inventories");
     }
 }

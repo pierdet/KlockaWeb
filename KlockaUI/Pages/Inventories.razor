@@ -1,16 +1,46 @@
-﻿<h3>Inventories</h3>
-@page "/inventories"
+﻿@page "/inventories"
+@using KlockaUI.Models
+@using KlockaLib.Data.Entities
 @inject KlockaLib.Repositories.IInventoryRepository InventoryRepository
+@inject IJSRuntime jsRuntime
+<h3>Inventories</h3>
+<h4>Add new inventory</h4>
+<EditForm Model="@newInventory" OnValidSubmit="@AddInventory">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputText @bind-Value="newInventory.Name" />
+    <button type="submit" class="btn btn-primary">Add</button>
+</EditForm>
 
-<ul>
+
+<div class="list-group">
     @foreach (var inventory in InventoryRepository.GetAll())
     {
-        <li>@inventory.Name
-            <a href="/inventory/@inventory.Id">Details</a>
-        </li>
-        
+        <a href="/inventory/@inventory.Id" class="list-group-item d-flex justify-content-between align-items-center">
+            @inventory.Name
+            <span class="badge badge-primary badge-pill">Host count: @inventory.Hosts.Count</span>
+        </a>
     }
-</ul>
+</div>
 @code {
+    private InventoryItem newInventory = new InventoryItem();
+    
+    private async Task ShowAlert(string message)
+    {
+        await jsRuntime.InvokeAsync<object>("ShowAlert", message);
+    }
 
+    private async Task AddInventory()
+    {
+        try
+        {
+            InventoryRepository.Add(newInventory.Name);
+        }
+        catch (Exception e)
+        {
+            await ShowAlert($"failed to add inventory - {e}");
+            newInventory.Name = string.Empty;
+        }
+
+    }
 }
