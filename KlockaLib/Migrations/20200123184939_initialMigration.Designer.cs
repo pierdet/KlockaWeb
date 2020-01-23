@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KlockaLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200120205158_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20200123184939_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,7 @@ namespace KlockaLib.Migrations
                     b.Property<string>("IpAddress")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsOnline")
+                    b.Property<bool?>("IsOnline")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")

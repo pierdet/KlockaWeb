@@ -1,18 +1,41 @@
 ﻿@page "/inventory/{Id:int}"
+@using KlockaLib.Data.Entities
+@using KlockaUI.Models
 @inject KlockaLib.Repositories.IInventoryRepository InventoryRepository
 @inject NavigationManager NavigationManager
-@using KlockaLib.Data.Entities
-
-    <h3>
-        @inv.Name
-        <span class="btn btn-primary" @onclick="BackToInventories">&#x25c0;</span>
-    </h3>
 
 
+<h3>
+    @inv.Name
+    <span class="btn btn-primary" @onclick="BackToInventories">&#x25c0;</span>
+</h3>
+
+<EditForm Model="@hostItem" OnValidSubmit="@AddHost">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputText @bind-Value="hostItem.Name" />
+    <InputText @bind-Value="hostItem.IpAddress" />
+    <button type="submit" class="btn btn-primary">Add</button>
+</EditForm>
+
+@foreach (var host in inv.Hosts)
+{
+<div class="card border-primary mb-3" style="max-width: 18rem;">
+    <div class="card-header">@host.Name</div>
+    <div class="card-body text-primary">
+        <h5 class="card-title">@host.IpAddress</h5>
+        <p class="card-text">
+            @DisplayHostStatus(host)
+        </p>
+    </div>
+</div>
+}
 
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    private HostItem hostItem = new HostItem();
 
     Inventory inv;
     protected override void OnInitialized()
@@ -20,8 +43,32 @@
         inv = InventoryRepository.GetById(Id);
     }
 
+    void AddHost()
+    {
+        var newHost = new Host()
+        {
+            Name = hostItem.Name,
+            IpAddress = hostItem.IpAddress,
+        };
+        inv.Hosts.Add(newHost);
+        InventoryRepository.UpdateInventory(inv);
+    }
+
     void BackToInventories()
     {
         NavigationManager.NavigateTo("/inventories");
+    }
+
+    string DisplayHostStatus(Host host)
+    {
+        switch (host.IsOnline)
+        {
+            case true:
+                return "Status: Online";
+            case false:
+                return "Status: Offline";
+            default:
+                return "Status: Unknown";
+        }
     }
 }

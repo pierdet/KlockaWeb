@@ -49,7 +49,7 @@ namespace KlockaLib.Data
             {
                 i.HasData(new Inventory
                 {
-                    Id = 1,
+                    Id = 2,
                     Name = "Demo Inventory",
                 });
             });    

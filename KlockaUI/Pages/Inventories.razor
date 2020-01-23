@@ -2,7 +2,6 @@
 @using KlockaUI.Models
 @using KlockaLib.Data.Entities
 @inject KlockaLib.Repositories.IInventoryRepository InventoryRepository
-@inject IJSRuntime jsRuntime
 <h3>Inventories</h3>
 <h4>Add new inventory</h4>
 <EditForm Model="@newInventory" OnValidSubmit="@AddInventory">
@@ -12,25 +11,25 @@
     <button type="submit" class="btn btn-primary">Add</button>
 </EditForm>
 
-
+@if (InventoryRepository == null)
+{
+    <p><em>Loading..</em></p>
+}
 <div class="list-group">
     @foreach (var inventory in InventoryRepository.GetAll())
     {
         <a href="/inventory/@inventory.Id" class="list-group-item d-flex justify-content-between align-items-center">
             @inventory.Name
-            <span class="badge badge-primary badge-pill">Host count: @inventory.Hosts.Count</span>
+            <span class="badge badge-primary badge-pill">Host count: @InventoryRepository.GetInventoryHostCount(inventory).ToString()</span>
         </a>
     }
 </div>
 @code {
     private InventoryItem newInventory = new InventoryItem();
     
-    private async Task ShowAlert(string message)
-    {
-        await jsRuntime.InvokeAsync<object>("ShowAlert", message);
-    }
+    
 
-    private async Task AddInventory()
+    private void AddInventory()
     {
         try
         {

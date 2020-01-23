@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200120205427_Data annotations.cs" />
     <Compile Remove="Migrations\20200120205427_Data annotations.Designer.cs" />
+    <Compile Remove="Migrations\20200123191919_context.cs" />
+    <Compile Remove="Migrations\20200123191919_context.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

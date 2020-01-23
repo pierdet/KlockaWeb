@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace KlockaLib.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -173,7 +173,7 @@ namespace KlockaLib.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     IpAddress = table.Column<string>(nullable: true),
-                    IsOnline = table.Column<bool>(nullable: false),
+                    IsOnline = table.Column<bool>(nullable: true),
                     InventoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

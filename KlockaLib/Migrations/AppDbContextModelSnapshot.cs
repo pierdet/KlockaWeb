@@ -28,7 +28,7 @@ namespace KlockaLib.Migrations
                     b.Property<string>("IpAddress")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsOnline")
+                    b.Property<bool?>("IsOnline")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -57,7 +57,7 @@ namespace KlockaLib.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 2,
                             Name = "Demo Inventory"
                         });
                 });

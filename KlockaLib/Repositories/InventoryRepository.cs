@@ -15,6 +15,7 @@ namespace KlockaLib.Repositories
         public Inventory GetByName(string name);
         public Inventory GetById(int id);
         public void UpdateInventory(Inventory inventory);
+        public int GetInventoryHostCount(Inventory inventory);
     }
     public class InventoryRepository : IInventoryRepository
     {
@@ -37,7 +38,16 @@ namespace KlockaLib.Repositories
         {
             using (var context = new AppDbContext())
             {
-                return context.Inventories.ToList();
+                return context.Inventories.
+                    ToList();
+            }
+        }
+
+        public int GetInventoryHostCount(Inventory inventory)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Hosts.Count(i => i.InventoryId == inventory.Id);
             }
         }
 
