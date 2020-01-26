@@ -18,18 +18,28 @@
     <button type="submit" class="btn btn-primary">Add</button>
 </EditForm>
 
-@foreach (var host in inv.Hosts)
-{
-<div class="card border-primary mb-3" style="max-width: 18rem;">
-    <div class="card-header">@host.Name</div>
-    <div class="card-body text-primary">
-        <h5 class="card-title">@host.IpAddress</h5>
-        <p class="card-text">
-            @DisplayHostStatus(host)
-        </p>
-    </div>
-</div>
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Hostname</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var host in inv.Hosts)
+        {
+        <tr>
+            <td>@host.Name</td>
+            <td>@host.IpAddress</td>
+            <td>@DisplayHostStatus(host)</td>
+        </tr> 
+        }
+
+
+
+    </tbody>
+</table>
 
 @code {
     [Parameter]
@@ -64,11 +74,11 @@
         switch (host.IsOnline)
         {
             case true:
-                return "Status: Online";
+                return "Online";
             case false:
-                return "Status: Offline";
+                return "Offline";
             default:
-                return "Status: Unknown";
+                return "Unknown";
         }
     }
 }
