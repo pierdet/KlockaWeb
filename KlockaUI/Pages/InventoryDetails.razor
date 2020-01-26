@@ -10,6 +10,7 @@
     <span class="btn btn-primary" @onclick="BackToInventories">&#x25c0;</span>
 </h3>
 
+<!--TODO - Implement Modal https://www.telerik.com/blogs/creating-a-reusable-javascript-free-blazor-modal -->
 <EditForm Model="@hostItem" OnValidSubmit="@AddHost">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -29,11 +30,12 @@
     <tbody>
         @foreach (var host in inv.Hosts)
         {
-        <tr>
-            <td>@host.Name</td>
-            <td>@host.IpAddress</td>
-            <td>@DisplayHostStatus(host)</td>
-        </tr> 
+            <tr>
+                <td>@host.Name</td>
+                <td>@host.IpAddress</td>
+                <td>@DisplayHostStatus(host)</td>
+            </tr>
+
         }
 
 
