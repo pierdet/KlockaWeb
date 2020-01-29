@@ -12,6 +12,8 @@ namespace KlockaLib.Repositories
     {
         public void Add(string name);
         public IEnumerable<Inventory> GetAll();
+        public void UpdateHost(Host host);
+        public IEnumerable<Host> GetAllHosts();
         public Inventory GetByName(string name);
         public Inventory GetById(int id);
         public void UpdateInventory(Inventory inventory);
@@ -77,6 +79,25 @@ namespace KlockaLib.Repositories
             {
             context.Inventories.Update(inventory);
             context.SaveChanges();
+            }
+        }
+
+
+        public IEnumerable<Host> GetAllHosts()
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Hosts
+                    .ToList();
+            }
+        }
+
+        public void UpdateHost(Host host)
+        {
+            using (var context = new AppDbContext())
+            {
+                context.Hosts.Update(host);
+                context.SaveChanges();
             }
         }
     }

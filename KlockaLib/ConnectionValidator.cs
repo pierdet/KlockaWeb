@@ -52,4 +52,6 @@ namespace KlockaLib
             _pinger.Dispose();
         }
     }
+
+    
 }
