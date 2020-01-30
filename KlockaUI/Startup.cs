@@ -40,7 +40,7 @@ namespace KlockaUI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ConnectionValidatorJob job)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -58,7 +58,7 @@ namespace KlockaUI
             app.UseRouting();
             app.UseHangfireServer();
             app.UseHangfireDashboard();
-            app.AddHangfireJobs(job);
+            app.AddHangfireJobs();
 
             app.UseEndpoints(endpoints =>
             {

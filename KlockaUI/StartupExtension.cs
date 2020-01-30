@@ -1,6 +1,7 @@
 ﻿using Hangfire;
 using KlockaLib;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace KlockaUI
 {
     public static class StartupExtension
     {
-        public static void AddHangfireJobs(this IApplicationBuilder app, ConnectionValidatorJob job)
+        public static void AddHangfireJobs(this IApplicationBuilder app)
         {
+            var job = app.ApplicationServices.GetRequiredService<ConnectionValidatorJob>();
             RecurringJob.AddOrUpdate(() => job.CheckHosts(), "*/5 * * * *");
         }
     }
