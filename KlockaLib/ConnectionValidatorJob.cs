@@ -24,13 +24,13 @@ namespace KlockaLib
                 if (response.Success)
                 {
                     host.IsOnline = true;
-                    _inventoryRepository.UpdateHost(host);
                 }
                 else
                 {
                     host.IsOnline = false;
-                    _inventoryRepository.UpdateHost(host);
                 }
+                host.LastChecked = DateTime.Now;
+                _inventoryRepository.UpdateHost(host);
             }
         }
     }

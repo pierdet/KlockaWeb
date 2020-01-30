@@ -11,6 +11,7 @@ namespace KlockaLib.Data.Entities
         public string Name { get; set; }
         public string IpAddress { get; set; }
         public bool? IsOnline { get; set; }
+        public DateTime? LastChecked { get; set; }
 
         public Inventory Inventory { get; set; }
         public int InventoryId { get; set; }

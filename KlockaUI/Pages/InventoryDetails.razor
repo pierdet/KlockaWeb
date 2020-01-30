@@ -25,16 +25,18 @@
             <th scope="col">Name</th>
             <th scope="col">Hostname</th>
             <th scope="col">Status</th>
+            <th scope="col">Checked</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var host in inv.Hosts)
         {
-            <tr>
-                <td>@host.Name</td>
-                <td>@host.IpAddress</td>
-                <td>@DisplayHostStatus(host)</td>
-            </tr>
+        <tr>
+            <td>@host.Name</td>
+            <td>@host.IpAddress</td>
+            <td>@DisplayHostStatus(host)</td>
+            <td>@(host.LastChecked != null ? host.LastChecked.ToString() : "Never" )</td>
+        </tr>
 
         }
 
@@ -83,4 +85,6 @@
                 return "Unknown";
         }
     }
+
+    
 }
