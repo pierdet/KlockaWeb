@@ -13,7 +13,7 @@ namespace KlockaUI
     {
         public static void AddHangfireJobs(this IApplicationBuilder app)
         {
-            var job = app.ApplicationServices.GetRequiredService<ConnectionValidatorJob>();
+            var job = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ConnectionValidatorJob>();
             RecurringJob.AddOrUpdate(() => job.CheckHosts(), "*/5 * * * *");
         }
     }
