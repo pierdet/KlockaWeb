@@ -56,13 +56,9 @@ namespace KlockaUI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
-            
             app.UseHangfireServer();
             app.UseHangfireDashboard();
-            // TODO - Fix cron statement as Cron.MinuteInterval will be removed in upcoming versions
-            // TODO - Change to every 5 minutes?
-            RecurringJob.AddOrUpdate(() => job.CheckHosts(), Cron.MinuteInterval(1));
+            app.AddHangfireJobs(job);
 
             app.UseEndpoints(endpoints =>
             {
